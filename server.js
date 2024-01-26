@@ -17,7 +17,17 @@ mangoose.
 
 const port = process.env.PORT
 
-app.listen(port,()=>{
+const server = app.listen(port,()=>{
 
-    console.log(`server is running on port ${port}`)
+    console.log(`server is running on port ${port} in ${process.env.NODE_ENV}`)
+})
+
+process.on('unhandledRejection',err=>{
+
+  console.log(err.name, err.message)
+
+  server.close(()=>{
+
+    process.exit(1)
+  })
 })
